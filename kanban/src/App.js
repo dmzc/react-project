@@ -10,17 +10,18 @@ import {
   COLUMN_KEY_DONE
 } from './components/KanbanBoard';
 import AdminContext from './context/AdminContext';
+import { useImmer } from "use-immer"
 
 function App() {
-  const [todoList, setTodoList] = useState([
+  const [todoList, setTodoList] = useImmer([
     { title: '开发任务1', status: '22-05-22 18:15' },
     { title: '开发任务2', status: '22-05-22 18:15' }
   ]);
-  const [ongoingList, setOngoningList] = useState([
+  const [ongoingList, setOngoningList] = useImmer([
     { title: '开发任务3', status: '22-05-22 18:15' },
     { title: '开发任务4', status: '22-05-22 18:15' }
   ]);
-  const [doneList, setDoneList] = useState([
+  const [doneList, setDoneList] = useImmer([
     { title: '开发任务5', status: '22-05-22 18:15' },
     { title: '开发任务6', status: '22-05-22 18:15' }
   ]);
@@ -44,7 +45,7 @@ function App() {
   }
 
   const handleAdd = (column, newCard) => {
-    updaters[column]((currentStat) => [newCard, ...currentStat]);
+    updaters[column]((currentStat) => currentStat.unshift(newCard));
   }
 
   const handleRemove = (column, removeCard) => {
